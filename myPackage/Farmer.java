@@ -1,4 +1,5 @@
 package myPackage;
+import myPackage.Farmer;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

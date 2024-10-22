@@ -19,10 +19,16 @@ public class test {
         farmer.sendMessage("This is my first message");
         farmer.seeMessage();
         // farmer.deleteFarmer("FA123");
-        //Government gov =new Government();
+        Government gov =new Government();
         //gov.viewFarmer();
-        // gov.makeAnnouncement("The prices of cropos have been reduced");
+        gov.makeAnnouncement("The prices of crops have been reduced");
         // gov.seeGrievence();
+        gov.sendMessage("FA123", "We are with you");
+        gov.seeMessage("FA123");
+        farmer.sendMessage("This is my first message");
+        gov.seeMessage("FA123");
+        gov.sendMessage("FA123", "We are with you");
+        farmer.seeMessage();
     }
     
 }

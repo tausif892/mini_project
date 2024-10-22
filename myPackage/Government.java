@@ -1,5 +1,4 @@
 package myPackage;
-import myPackage.Farmer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -7,7 +6,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 
-public class Government extends Farmer{
+public class Government {
     String announcement;
 
     public void viewFarmer(){
@@ -57,4 +56,44 @@ public class Government extends Farmer{
             System.out.println(e);
         }
     }
+    public void sendMessage(String FarmerID,String message){
+        String filepath = "C://oop_project//chat//" + FarmerID + ".txt";
+        File file = new File(filepath);
+        try{
+            if (!file.exists()){
+                file.createNewFile();
+            }
+            else{
+                try{
+                 FileWriter messageWriter = new FileWriter(filepath,true);
+                 messageWriter.write("Government: " + message + "\n");
+                 messageWriter.close();
+                }catch (IOException e){
+                 System.out.println(e);
+                }
+             }
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        
+    }
+    public void seeMessage(String FarmerID){
+        try{
+            String filepath = "C://oop_project//chat//" + FarmerID + ".txt";
+        File messageFile = new File(filepath);
+        Scanner reader = new Scanner(messageFile);
+        String currentLine = new String();
+        while (reader.hasNextLine()==true){
+            currentLine = reader.nextLine();
+        }
+        if (currentLine.charAt(0)=='G'){
+            System.out.println("Farmer " + FarmerID + " has posted nothing as of yet");
+        }
+        else{
+            System.out.println(currentLine);
+        }
+    }catch (Exception e){
+        System.out.println(e);
+    }
+}
 }
