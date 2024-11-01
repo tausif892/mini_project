@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.Time;
 import java.util.Scanner;
+import java.util.*;
 
 
 public class Government {
@@ -128,7 +129,14 @@ public class Government {
 
     }
 
-    public void updateRealTimeData(String WeatherForcast , int CropPrices , String CropReco){
-        RealTimeData = "Weather Forecast: "+WeatherForcast+"\nCrop Prices: "+CropPrices+"\nCrop Recommendations: "+CropReco;
+    public void updateRealTimeData(){
+        float[] temp = {31.5,32.4,32.9,30.8,30.4,31.0};
+        Random r = new Random();
+        int randomindex = r.nextInt(temp.length);
+        System.out.println("The temperature right now is around " + temp[randomindex]);
+        int[] prices = {100,1500,1250,1463,1653,1780,1981};
+        int rindex = r.nextInt(prices.length);
+        System.out.println("The current price of crops is " + prices[rindex]);
+        System.out.println("Since the temperature is more than 30°C, it is advised to sow crops like Cotton and Millet.");
     }
 }
