@@ -129,14 +129,7 @@ public class Government {
 
     }
 
-    public void updateRealTimeData(){
-        float[] temp = {31.5f,32.4f,32.9f,30.8f,30.4f,31.0f};
-        Random r = new Random();
-        int randomindex = r.nextInt(temp.length);
-        System.out.println("The temperature right now is around " + temp[randomindex]);
-        int[] prices = {100,1500,1250,1463,1653,1780,1981};
-        int rindex = r.nextInt(prices.length);
-        System.out.println("The current price of crops is " + prices[rindex]);
-        System.out.println("Since the temperature is more than 30°C, it is advised to sow crops like Cotton and Millet.");
+    public void updateRealTimeData(String WeatherForcast , int CropPrices , String CropReco){
+        RealTimeData = "Weather Forecast: "+WeatherForcast+"\nCrop Prices: "+CropPrices+"\nCrop Recommendations: "+CropReco;
     }
 }
