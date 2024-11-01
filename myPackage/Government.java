@@ -57,7 +57,7 @@ public class Government {
         }
     }
     public void sendMessage(String FarmerID,String message){
-        String filepath = "C://oop_project//chat//" + FarmerID + ".txt";
+            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + FarmerID + ".txt";
         File file = new File(filepath);
         try{
             if (!file.exists()){
@@ -79,7 +79,7 @@ public class Government {
     }
     public void seeMessage(String FarmerID){
         try{
-            String filepath = "C://oop_project//chat//" + FarmerID + ".txt";
+            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + FarmerID + ".txt";
         File messageFile = new File(filepath);
         Scanner reader = new Scanner(messageFile);
         String currentLine = new String();

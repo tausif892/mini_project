@@ -26,13 +26,13 @@ public class Farmer{
     public void setFarmerName(String farmerName){
         this.farmerName=farmerName;
     }
-    String getFarmerName(){
+    public String getFarmerName(){
         return this.farmerName;
     }
    public  void setFarmerID(String num){
         this.FarmerID=num;
     }
-    String getFarmerID(){
+    public String getFarmerID(){
         return this.FarmerID;
     }
     public void Register(){
@@ -44,7 +44,7 @@ public class Farmer{
             NamefileWriter.close();
             IDfileWriter.close();
             count++;
-            String filepath = "C:\\oop_project\\chat\\" + getFarmerID() + ".txt";
+            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
             File file = new File(filepath);
             file.createNewFile();
         }
@@ -54,7 +54,7 @@ public class Farmer{
     }
 
     public void deleteFarmer(String id){
-        String path = "C:\\oop_project\\chat\\"+getFarmerID()+".txt";
+        String path = "V"+getFarmerID()+".txt";
         try{
             File TempName= new File("tempName.txt");
             File TempID= new File("tempID.txt");
@@ -140,7 +140,7 @@ public class Farmer{
     
     public void sendMessage(String message){
         try{
-            String filepath = "C:\\oop_project\\chat\\" + getFarmerID() + ".txt";
+            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
         FileWriter messageWriter = new FileWriter(filepath,true);
         messageWriter.write("Farmer: " + message + "\n");
         messageWriter.close();
@@ -151,7 +151,7 @@ public class Farmer{
 
     public void seeMessage(){
         try{
-            String filepath = "C:\\oop_project\\chat\\" + getFarmerID() + ".txt";
+            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
             File messageFile = new File(filepath);
         Scanner reader = new Scanner(messageFile);
         String currentLine = new String();

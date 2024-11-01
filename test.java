@@ -23,11 +23,11 @@ public class test {
         //gov.viewFarmer();
         gov.makeAnnouncement("The prices of crops have been reduced");
         // gov.seeGrievence();
-        gov.sendMessage("FA123", "We are with you");
-        gov.seeMessage("FA123");
+        gov.sendMessage(farmer.getFarmerID(), "We are with you");
+        gov.seeMessage(farmer.getFarmerID());
         farmer.sendMessage("This is my first message");
-        gov.seeMessage("FA123");
-        gov.sendMessage("FA123", "We are with you");
+        gov.seeMessage(farmer.getFarmerID());
+        gov.sendMessage(farmer.getFarmerID(), "We are with you");
         farmer.seeMessage();
     }
     
