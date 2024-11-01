@@ -1,99 +1,96 @@
 package myPackage;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
-
 public class Government {
-    String announcement;
+    private String announcement;
 
-    public void viewFarmer(){
-        File FarmerName= new File("farmerName.txt");
-        File FarmerID= new File("farmerID.txt");
-        try{
-            Scanner nameReader = new Scanner(FarmerName);
-            Scanner IdReader = new Scanner(FarmerID);
+    private static final Path BASE_DIRECTORY = Paths.get(System.getProperty("user.dir"), "chat");
+
+    public void viewFarmer() {
+        File farmerNameFile = new File("farmerName.txt");
+        File farmerIDFile = new File("farmerID.txt");
+        try {
+            Scanner nameReader = new Scanner(farmerNameFile);
+            Scanner idReader = new Scanner(farmerIDFile);
             int count = 1;
-            while(nameReader.hasNextLine() && IdReader.hasNextLine()){
-                System.out.println("\nDetails of Farmer "+count++);
-                System.out.println("Name: "+nameReader.nextLine());
-                System.out.println("Farmer ID : "+IdReader.nextLine()+"\n");
+            while (nameReader.hasNextLine() && idReader.hasNextLine()) {
+                System.out.println("\nDetails of Farmer " + count++);
+                System.out.println("Name: " + nameReader.nextLine());
+                System.out.println("Farmer ID: " + idReader.nextLine() + "\n");
             }
-        }
-        catch(FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.out.println("\nFile Not Found!");
-            return;
-        }         
+        }
     }
 
-    public void makeAnnouncement(String announcement){
-        this.announcement=announcement;
-        
-        try( FileWriter announce = new FileWriter("Anouncements.txt",true)){
-            announce.write(announcement + "\n");
-        }catch( IOException e){
+    public void makeAnnouncement(String announcement) {
+        this.announcement = announcement;
+
+        try (FileWriter announceWriter = new FileWriter("Announcements.txt", true)) {
+            announceWriter.write(announcement + "\n");
+        } catch (IOException e) {
             System.out.println(e);
         }
     }
 
-    public void seeGrievence(){
-        File complaint = new File("Grivence.txt");
-        System.out.println("Grievences list");
-        try{
-            Scanner s = new Scanner(complaint);
-            String currentComplaint;
-            while (s.hasNextLine()){
-                currentComplaint = s.nextLine();
-                if (currentComplaint.equals("")){
+    public void seeGrievance() {
+        File grievanceFile = new File("Grievance.txt");
+        System.out.println("Grievances list");
+        try {
+            Scanner scanner = new Scanner(grievanceFile);
+            while (scanner.hasNextLine()) {
+                String currentGrievance = scanner.nextLine();
+                if (currentGrievance.equals("")) {
                     System.out.println("No more grievances left");
                     return;
                 }
-                System.out.println(currentComplaint);
+                System.out.println(currentGrievance);
             }
-        }catch(Exception e){
-            System.out.println(e);
+        } catch (FileNotFoundException e) {
+            System.out.println("\nFile Not Found!");
         }
     }
-    public void sendMessage(String FarmerID,String message){
-            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + FarmerID + ".txt";
-        File file = new File(filepath);
-        try{
-            if (!file.exists()){
+
+    public void sendMessage(String farmerID, String message) {
+        String filePath = Paths.get(BASE_DIRECTORY.toString(), farmerID + ".txt").toString();
+        File file = new File(filePath);
+        try {
+            if (!file.exists()) {
                 file.createNewFile();
             }
-            else{
-                try{
-                 FileWriter messageWriter = new FileWriter(filepath,true);
-                 messageWriter.write("Government: " + message + "\n");
-                 messageWriter.close();
-                }catch (IOException e){
-                 System.out.println(e);
-                }
-             }
-        }catch (Exception e){
+            try (FileWriter messageWriter = new FileWriter(filePath, true)) {
+                messageWriter.write("Government: " + message + "\n");
+            } catch (IOException e) {
+                System.out.println(e);
+            }
+        } catch (IOException e) {
             System.out.println(e);
         }
-        
     }
-    public void seeMessage(String FarmerID){
-        try{
-            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + FarmerID + ".txt";
-        File messageFile = new File(filepath);
-        Scanner reader = new Scanner(messageFile);
-        String currentLine = new String();
-        while (reader.hasNextLine()==true){
-            currentLine = reader.nextLine();
+
+    public void seeMessage(String farmerID) {
+        String filePath = Paths.get(BASE_DIRECTORY.toString(), farmerID + ".txt").toString();
+        File messageFile = new File(filePath);
+        try {
+            Scanner reader = new Scanner(messageFile);
+            String currentLine = "";
+            while (reader.hasNextLine()) {
+                currentLine = reader.nextLine();
+            }
+            if (!currentLine.isEmpty() && currentLine.charAt(0) == 'G') {
+                System.out.println("Farmer " + farmerID + " has posted nothing as of yet");
+            } else {
+                System.out.println(currentLine);
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("\nFile Not Found!");
         }
-        if (currentLine.charAt(0)=='G'){
-            System.out.println("Farmer " + FarmerID + " has posted nothing as of yet");
-        }
-        else{
-            System.out.println(currentLine);
-        }
-    }catch (Exception e){
-        System.out.println(e);
     }
-}
 }

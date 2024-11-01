@@ -1,174 +1,161 @@
 package myPackage;
-import myPackage.Farmer;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class Farmer{
+public class Farmer {
     private String farmerName;
-    private String FarmerID;
-    private String Grivence;
+    private String farmerID; 
+    private String grievance; 
     static int count = 0;
 
-    void createFile(String Fname){
-        
-        // File farmerNameFile= new File("farmerName.txt");
-        // File farmerIDFile= new File("farmerID.txt");
-        File grivenceFile= new File(Fname);
-        try {
-            grivenceFile.createNewFile();
-        } catch (IOException e) {
-            System.out.println("Cannot Create "+Fname);
-        }   
+    private static final Path BASE_DIRECTORY = Paths.get(System.getProperty("user.dir"), "chat");
 
+    void createFile(String fileName) {
+        File grievanceFile = new File(BASE_DIRECTORY.toFile(), fileName);
+        try {
+            grievanceFile.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Cannot Create " + fileName);
+        }
     }
-    public void setFarmerName(String farmerName){
-        this.farmerName=farmerName;
+
+    public void setFarmerName(String farmerName) {
+        this.farmerName = farmerName;
     }
-    public String getFarmerName(){
+
+    public String getFarmerName() {
         return this.farmerName;
     }
-   public  void setFarmerID(String num){
-        this.FarmerID=num;
+
+    public void setFarmerID(String id) {
+        this.farmerID = id;
     }
-    public String getFarmerID(){
-        return this.FarmerID;
+
+    public String getFarmerID() {
+        return this.farmerID;
     }
-    public void Register(){
-        try{
-            FileWriter NamefileWriter= new FileWriter("farmerName.txt",true);
-            FileWriter IDfileWriter= new FileWriter("farmerID.txt",true);
-            NamefileWriter.write(getFarmerName()+"\n");
-            IDfileWriter.write(getFarmerID()+"\n");
-            NamefileWriter.close();
-            IDfileWriter.close();
+    public void register() {
+        try {
+            FileWriter nameFileWriter = new FileWriter("farmerName.txt", true);
+            FileWriter idFileWriter = new FileWriter("farmerID.txt", true);
+            nameFileWriter.write(getFarmerName() + "\n");
+            idFileWriter.write(getFarmerID() + "\n");
+            nameFileWriter.close();
+            idFileWriter.close();
             count++;
-            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
-            File file = new File(filepath);
+            File file = new File(BASE_DIRECTORY.toFile(), getFarmerID() + ".txt");
             file.createNewFile();
-        }
-        catch(IOException e){
-            assert  true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void deleteFarmer(String id){
-        String path = "V"+getFarmerID()+".txt";
-        try{
-            File TempName= new File("tempName.txt");
-            File TempID= new File("tempID.txt");
-            TempID.createNewFile();
-            TempName.createNewFile();
-            File NameFile= new File("farmerName.txt");
-            File IdFile= new File("farmerID.txt");
-            Scanner NameRead=new Scanner(NameFile);
-            Scanner IDRead=new Scanner(IdFile);
+    public void deleteFarmer(String id) {
+        File path = new File(BASE_DIRECTORY.toFile(), id + ".txt");
+        try {
+            File tempName = new File("tempName.txt");
+            File tempID = new File("tempID.txt");
+            tempID.createNewFile();
+            tempName.createNewFile();
+            File nameFile = new File("farmerName.txt");
+            File idFile = new File("farmerID.txt");
+            Scanner nameReader = new Scanner(nameFile);
+            Scanner idReader = new Scanner(idFile);
 
-
-            FileWriter TempNameWriter=new FileWriter("tempName.txt",true);
-            FileWriter TempIDWriter=new FileWriter("tempID.txt",true);
-            String CurrentID;
-            String CurrentName;
-            while(IDRead.hasNextLine()){
-                CurrentID=IDRead.nextLine();
-                CurrentName=NameRead.nextLine();
-                if(!CurrentID.equals(id)){
-                    TempIDWriter.write(CurrentID+"\n");
-                    TempNameWriter.write(CurrentName+"\n");
+            FileWriter tempNameWriter = new FileWriter("tempName.txt", true);
+            FileWriter tempIDWriter = new FileWriter("tempID.txt", true);
+            String currentID;
+            String currentName;
+            while (idReader.hasNextLine()) {
+                currentID = idReader.nextLine();
+                currentName = nameReader.nextLine();
+                if (!currentID.equals(id)) {
+                    tempIDWriter.write(currentID + "\n");
+                    tempNameWriter.write(currentName + "\n");
                 }
             }
 
+            nameReader.close();
+            idReader.close();
+            tempNameWriter.close();
+            tempIDWriter.close();
 
-            NameRead.close();
-            IDRead.close();
-            TempNameWriter.close();
-            TempIDWriter.close();
-            
-
-            NameFile.delete();
-            IdFile.delete();
-            File NameDump= new File("farmerName.txt");
-            File IdDump= new File("farmerID.txt");
-            TempID.renameTo(IdDump);
-            TempName.renameTo(NameDump);
-            File file = new File(path);
-            file.delete();
+            nameFile.delete();
+            idFile.delete();
+            File nameDump = new File("farmerName.txt");
+            File idDump = new File("farmerID.txt");
+            tempID.renameTo(idDump);
+            tempName.renameTo(nameDump);
+            path.delete();
             count--;
 
-        }
-
-
-        catch(IOException e){
-            assert true;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void putGrivence(String Grivence){
-        this.Grivence=Grivence;
-        try{
-            FileWriter grivenceFileWriter = new FileWriter("Grivence.txt",true);
-            grivenceFileWriter.write(getFarmerID() + " " + this.Grivence+"\n");
-            grivenceFileWriter.close();
-        }
-        catch(IOException e){
-            // createFile("Grivence.txt");
-            // putGrivence(getFarmerID() +" " +  this.Grivence + "\n");
-            System.out.println(e);
-        }
-    }
-
-    public void getAnouncement(){
-        File anouncementFile =new File("Anouncements.txt");
+    public void putGrievance(String grievance) {
+        this.grievance = grievance;
         try {
-            Scanner anouncement=new Scanner(anouncementFile);
-            System.out.println("Anouncements:\n");
-            String currentAnouncement;
-            while (anouncement.hasNextLine()) { 
-                currentAnouncement = anouncement.nextLine();
-                if(currentAnouncement.equals("")){
-                    System.out.println("No Anouncements");
+            FileWriter grievanceFileWriter = new FileWriter("Grievance.txt", true);
+            grievanceFileWriter.write(getFarmerID() + " " + this.grievance + "\n");
+            grievanceFileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getAnnouncement() {
+        File announcementFile = new File("Announcements.txt");
+        try {
+            Scanner announcement = new Scanner(announcementFile);
+            System.out.println("Announcements:\n");
+            String currentAnnouncement;
+            while (announcement.hasNextLine()) {
+                currentAnnouncement = announcement.nextLine();
+                if (currentAnnouncement.equals("")) {
+                    System.out.println("No Announcements");
                     return;
                 }
-                System.out.println(anouncement.nextLine());
+                System.out.println(announcement.nextLine());
             }
-            
+
         } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-    
-    public void sendMessage(String message){
-        try{
-            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
-        FileWriter messageWriter = new FileWriter(filepath,true);
-        messageWriter.write("Farmer: " + message + "\n");
-        messageWriter.close();
-        }catch(IOException e){
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 
-    public void seeMessage(){
-        try{
-            String filepath = "//home//student//230905330//oop_project//mini_project//chat//" + getFarmerID() + ".txt";
-            File messageFile = new File(filepath);
-        Scanner reader = new Scanner(messageFile);
-        String currentLine = new String();
-        while (reader.hasNextLine()==true){
-            currentLine=reader.nextLine();
+    public void sendMessage(String message) {
+        try {
+            File filePath = new File(BASE_DIRECTORY.toFile(), getFarmerID() + ".txt");
+            FileWriter messageWriter = new FileWriter(filePath, true);
+            messageWriter.write("Farmer: " + message + "\n");
+            messageWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        if (currentLine.charAt(0)=='F'){
-            System.out.println("No updates from the government");
-            return;
-        }
-        else {
-            System.out.println(currentLine);
-        }
-        }catch (IOException e){
-            System.out.println(e);
+    }
+
+    public void seeMessage() {
+        try {
+            File filePath = new File(BASE_DIRECTORY.toFile(), getFarmerID() + ".txt");
+            Scanner reader = new Scanner(filePath);
+            String currentLine = "";
+            while (reader.hasNextLine()) {
+                currentLine = reader.nextLine();
+            }
+            if (currentLine.charAt(0) == 'F') {
+                System.out.println("No updates from the government");
+            } else {
+                System.out.println(currentLine);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
-
-
