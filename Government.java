@@ -130,7 +130,7 @@ public class Government {
     }
 
     public void updateRealTimeData(){
-        float[] temp = {31.5,32.4,32.9,30.8,30.4,31.0};
+        float[] temp = {31.5f,32.4f,32.9f,30.8f,30.4f,31.0f};
         Random r = new Random();
         int randomindex = r.nextInt(temp.length);
         System.out.println("The temperature right now is around " + temp[randomindex]);
